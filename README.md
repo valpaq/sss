@@ -1,0 +1,1 @@
+Hi, here you can see simple implementation of Shamir Secret Sharing.

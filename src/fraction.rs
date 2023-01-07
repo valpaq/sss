@@ -1,27 +1,24 @@
-use num_bigint::BigUint;
+use num_bigint::BigInt;
 use num_integer::Integer;
-use num_traits::{
-    identities::{One, Zero},
-    CheckedDiv, CheckedMul,
-};
+use num_traits::identities::{One, Zero};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Fraction {
-    pub numerator: BigUint,
-    pub denominator: BigUint,
+    pub numerator: BigInt,
+    pub denominator: BigInt,
 }
 
 impl Default for Fraction {
     fn default() -> Self {
         Fraction {
-            numerator: BigUint::zero(),
-            denominator: BigUint::one(),
+            numerator: BigInt::zero(),
+            denominator: BigInt::one(),
         }
     }
 }
 
 impl Fraction {
-    pub fn new(numerator: &BigUint, denominator: &BigUint) -> Self {
+    pub fn new(numerator: &BigInt, denominator: &BigInt) -> Self {
         Fraction {
             numerator: numerator.clone(),
             denominator: denominator.clone(),
@@ -56,21 +53,21 @@ impl Fraction {
         }
     }
 
-    pub fn finalize(&self) -> BigUint {
+    pub fn finalize(&self) -> BigInt {
         self.numerator.clone() / self.denominator.clone()
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use num_bigint::ToBigUint;
+    use num_bigint::ToBigInt;
 
     use super::*;
 
     #[test]
     fn new_fraction_and_default() {
         let fraction_def = Fraction::default();
-        let fraction_init = Fraction::new(&0.to_biguint().unwrap(), &1.to_biguint().unwrap());
+        let fraction_init = Fraction::new(&0.to_bigint().unwrap(), &1.to_bigint().unwrap());
         assert_eq!(fraction_def, fraction_init);
     }
 
@@ -84,34 +81,34 @@ mod tests {
 
     #[test]
     fn sum_fraction_to_1_1() {
-        let fraction_def1 = Fraction::new(&1.to_biguint().unwrap(), &2.to_biguint().unwrap());
-        let fraction_def2 = Fraction::new(&1.to_biguint().unwrap(), &2.to_biguint().unwrap());
+        let fraction_def1 = Fraction::new(&1.to_bigint().unwrap(), &2.to_bigint().unwrap());
+        let fraction_def2 = Fraction::new(&1.to_bigint().unwrap(), &2.to_bigint().unwrap());
         let fraction_res = fraction_def1.fraction_add(&fraction_def2);
         assert_eq!(
             fraction_res,
-            Fraction::new(&1.to_biguint().unwrap(), &1.to_biguint().unwrap())
+            Fraction::new(&1.to_bigint().unwrap(), &1.to_bigint().unwrap())
         );
     }
 
     #[test]
     fn sum_fraction1() {
-        let fraction_def1 = Fraction::new(&1.to_biguint().unwrap(), &3.to_biguint().unwrap());
-        let fraction_def2 = Fraction::new(&3.to_biguint().unwrap(), &8.to_biguint().unwrap());
+        let fraction_def1 = Fraction::new(&1.to_bigint().unwrap(), &3.to_bigint().unwrap());
+        let fraction_def2 = Fraction::new(&3.to_bigint().unwrap(), &8.to_bigint().unwrap());
         let fraction_res = fraction_def1.fraction_add(&fraction_def2);
         assert_eq!(
             fraction_res,
-            Fraction::new(&17.to_biguint().unwrap(), &24.to_biguint().unwrap())
+            Fraction::new(&17.to_bigint().unwrap(), &24.to_bigint().unwrap())
         );
     }
 
     #[test]
     fn sum_fraction2() {
-        let fraction_def1 = Fraction::new(&3.to_biguint().unwrap(), &9.to_biguint().unwrap());
-        let fraction_def2 = Fraction::new(&4.to_biguint().unwrap(), &18.to_biguint().unwrap());
+        let fraction_def1 = Fraction::new(&3.to_bigint().unwrap(), &9.to_bigint().unwrap());
+        let fraction_def2 = Fraction::new(&4.to_bigint().unwrap(), &18.to_bigint().unwrap());
         let fraction_res = fraction_def1.fraction_add(&fraction_def2);
         assert_eq!(
             fraction_res,
-            Fraction::new(&10.to_biguint().unwrap(), &18.to_biguint().unwrap())
+            Fraction::new(&10.to_bigint().unwrap(), &18.to_bigint().unwrap())
         );
     }
 }
