@@ -1,5 +1,7 @@
-pub mod fraction;
+mod fraction;
 pub use fraction::Fraction;
 
-pub mod recover;
-pub mod split;
+mod recover;
+mod split;
+pub use recover::recover;
+pub use split::split;
