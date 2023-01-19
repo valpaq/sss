@@ -9,7 +9,7 @@ use std::str::FromStr;
 
 pub fn split_write(out: &mut dyn Write, information: Vec<BigInt>) -> Result<(), Error> {
     for (index, key_part) in information.into_iter().enumerate() {
-        out.write(format!("{}  {:x}", index + 1, key_part).as_bytes())
+        out.write(format!("{}  {key_part:} \n", index + 1).as_bytes())
             .expect("unable to write");
     }
     Ok(())
