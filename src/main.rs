@@ -1,12 +1,10 @@
 mod input_output;
+use clap::Parser;
 use input_output::*;
 use sss::*;
 use std::fs::File;
 use std::io;
 use std::path::PathBuf;
-// use std::iter::Iterator;
-
-use clap::Parser;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about)]
@@ -48,7 +46,22 @@ fn main() {
                 split_write(&mut io::stdout(), res).expect("cannot write to stdout");
             }
         }
-        "recover" => {}
+        "recover" => {
+            let points = parse_recover(cli.read_from);
+            let res = recover(points);
+            // println!("{:?}", res.to_str_radix(16).chars().step_by(2).map(|x| ));
+            let string_to_print = recover_parse_result(&res);
+            // let convert = convert_recover_to_str(res);
+            if let Some(write_to) = cli.write_to {
+                let mut file = File::options()
+                    .append(true)
+                    .open(write_to)
+                    .expect("no file");
+                recover_write(&mut file, &string_to_print).expect("cannot write to file");
+            } else {
+                recover_write(&mut io::stdout(), &string_to_print).expect("cannot write to stdout");
+            }
+        }
         _ => {}
     };
 }
