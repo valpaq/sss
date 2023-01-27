@@ -5,8 +5,8 @@ use num_traits::Num;
 use std::fmt::Error;
 use std::fs;
 use std::io::Write;
-use std::path::PathBuf;
 use std::ops::AddAssign;
+use std::path::PathBuf;
 
 pub fn split_write(out: &mut dyn Write, information: Vec<BigInt>) -> Result<(), Error> {
     for (index, key_part) in information.into_iter().enumerate() {
